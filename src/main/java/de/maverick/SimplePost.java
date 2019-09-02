@@ -16,12 +16,12 @@ public class SimplePost implements Post{
         this.message = message;
         for (Player player : subscribers) {
             if (!player.equals(sender)) {
-                player.receiveAndReply();
+                player.receiveAndReply(player);
             }
         }
     }
 
-    public String receive() {
+    public String receive(Player receiver) {
         return message;
     }
 

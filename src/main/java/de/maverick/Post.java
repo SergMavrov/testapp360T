@@ -4,5 +4,5 @@ public interface Post {
 
     void send(Player sender, String message);
 
-    String receive();
+    String receive(Player receiver);
 }

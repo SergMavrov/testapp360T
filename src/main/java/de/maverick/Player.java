@@ -7,7 +7,7 @@ public class Player {
     private static final byte LIMIT_OF_MESSAGES = 10;
 
     private String caption;
-    private Byte messageCounter;
+    private volatile Byte messageCounter;
     private Post post;
 
     public Player(String caption, Post post) {
@@ -22,11 +22,11 @@ public class Player {
         post.send(sender, message);
     }
 
-    public void receiveAndReply() {
-        String message = post.receive();
-        System.out.println(String.format("%s has received the message: %s", caption, message));
-        System.out.println(String.format("The count of messages = %d", messageCounter));
+    public void receiveAndReply(Player receiver) {
         if (messageCounter < LIMIT_OF_MESSAGES) {
+            String message = post.receive(receiver);
+            System.out.println(String.format("%s has received the message: %s", caption, message));
+            System.out.println(String.format("The count of messages = %d", messageCounter));
             send(this, String.format("%s-%d", message, messageCounter));
         }
     }
