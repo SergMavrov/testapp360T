@@ -7,13 +7,13 @@ public class Player {
     private static final byte LIMIT_OF_MESSAGES = 10;
 
     private String caption;
-    private Byte messageCounter = 0;
+    private Byte messageCounter;
     private Post post;
 
     public Player(String caption, Post post) {
         this.caption = caption;
         this.post = post;
-        ((SimplePost)this.post).registerSubscriber(this);
+        this.messageCounter = 0;
     }
 
     public void send(Player sender, String message) {
