@@ -16,7 +16,7 @@ public class SimplePost implements Post{
         this.message = message;
         for (Player player : subscribers) {
             if (!player.equals(sender)) {
-                player.receiveAndReply(player);
+                player.receiveAndReply();
             }
         }
     }

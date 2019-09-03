@@ -19,26 +19,26 @@ public class Player {
         this.receivedMessagesCounter = 0;
     }
 
-    public void send(Player sender, String message) {
+    public void send(String message) {
         sentMessagesCounter++;
         System.out.println(String.format("%s is sending message N%d: %s", caption, sentMessagesCounter, message));
-        post.send(sender, message);
+        post.send(this, message);
     }
 
-    private String receive(Player receiver) {
+    private String receive() {
         receivedMessagesCounter++;
-        String message = post.receive(receiver);
+        String message = post.receive(this);
         System.out.println(String.format("%s has received the message: %s", caption, message));
         return message;
     }
 
-    public void receiveAndReply(Player receiver) {
+    public void receiveAndReply() {
         if (receivedMessagesCounter < COUNT_OF_RECEIVED_MESSAGES) {
             System.out.println(String.format("The count of received messages = %s", receivedMessagesCounter));
-            String message = receive(receiver);
+            String message = receive();
             if (sentMessagesCounter < COUNT_OF_SENT_MESSAGES) {
                 System.out.println(String.format("The count of sent messages = %d", sentMessagesCounter));
-                send(this, String.format("%s-%d", message, sentMessagesCounter));
+                send(String.format("%s-%d", message, sentMessagesCounter));
             }
         } else {
             Thread.currentThread().interrupt();

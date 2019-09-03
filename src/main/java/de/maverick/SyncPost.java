@@ -1,16 +1,17 @@
 package de.maverick;
 
-import java.util.Optional;
+import org.apache.log4j.Logger;
 
 public class SyncPost implements Post{
+
+    private final static Logger LOGGER = Logger.getLogger(SyncPost.class);
 
     private String message;
     private Player owner;
 
     @Override
     public synchronized void send(Player sender, String message) {
-        System.out.println(String.format("%s SENDING state is %s",
-                Thread.currentThread().getName(), this.toString()));
+        LOGGER.debug(String.format("SENDING state is %s", this.toString()));
         while (sender.equals(owner)){
             try {
                 wait();
@@ -26,8 +27,7 @@ public class SyncPost implements Post{
 
     @Override
     public synchronized String receive(Player receiver) {
-        System.out.println(String.format("%s RECEIVING state is %s",
-                Thread.currentThread().getName(), this.toString()));
+        LOGGER.debug(String.format("RECEIVING state is %s", this.toString()));
         while (message==null || receiver.equals(owner)) {
             try {
                 wait();
