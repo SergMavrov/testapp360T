@@ -4,30 +4,42 @@ import java.util.Objects;
 
 public class Player {
 
-    private static final byte LIMIT_OF_MESSAGES = 10;
+    private static final byte COUNT_OF_SENT_MESSAGES = 10;
+    private static final byte COUNT_OF_RECEIVED_MESSAGES = 10;
 
     private String caption;
-    private volatile Byte messageCounter;
+    private byte sentMessagesCounter;
+    private byte receivedMessagesCounter;
     private Post post;
 
     public Player(String caption, Post post) {
         this.caption = caption;
         this.post = post;
-        this.messageCounter = 0;
+        this.sentMessagesCounter = 0;
+        this.receivedMessagesCounter = 0;
     }
 
     public void send(Player sender, String message) {
-        messageCounter++;
-        System.out.println(String.format("%s is sending message N%d: %s", caption, messageCounter, message));
+        sentMessagesCounter++;
+        System.out.println(String.format("%s is sending message N%d: %s", caption, sentMessagesCounter, message));
         post.send(sender, message);
     }
 
+    private String receive(Player receiver) {
+        receivedMessagesCounter++;
+        String message = post.receive(receiver);
+        System.out.println(String.format("%s has received the message: %s", caption, message));
+        return message;
+    }
+
     public void receiveAndReply(Player receiver) {
-        if (messageCounter < LIMIT_OF_MESSAGES) {
-            String message = post.receive(receiver);
-            System.out.println(String.format("%s has received the message: %s", caption, message));
-            System.out.println(String.format("The count of messages = %d", messageCounter));
-            send(this, String.format("%s-%d", message, messageCounter));
+        if (receivedMessagesCounter < COUNT_OF_RECEIVED_MESSAGES) {
+            System.out.println(String.format("The count of received messages = %s", receivedMessagesCounter));
+            String message = receive(receiver);
+            if (sentMessagesCounter < COUNT_OF_SENT_MESSAGES) {
+                System.out.println(String.format("The count of sent messages = %d", sentMessagesCounter));
+                send(this, String.format("%s-%d", message, sentMessagesCounter));
+            }
         } else {
             Thread.currentThread().interrupt();
         }
