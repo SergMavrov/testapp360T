@@ -36,7 +36,6 @@ public class SyncPost implements Post{
                 System.out.println(e.getMessage());
             }
         }
-        this.owner = receiver;
         notifyAll();
         return message;
     }

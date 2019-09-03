@@ -28,6 +28,8 @@ public class Player {
             System.out.println(String.format("%s has received the message: %s", caption, message));
             System.out.println(String.format("The count of messages = %d", messageCounter));
             send(this, String.format("%s-%d", message, messageCounter));
+        } else {
+            Thread.currentThread().interrupt();
         }
     }
 

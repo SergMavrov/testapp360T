@@ -2,6 +2,8 @@ package de.maverick;
 
 public class TestApp {
 
+    public static final String INIT_MESSAGE = "TEST_MESSAGE";
+
     public static void main(String[] args) {
         System.out.println("-=-=-=-=-=-=-=-=-=-=-");
         SimplePost simplePost = new SimplePost();
@@ -11,7 +13,7 @@ public class TestApp {
         Player partner = new Player("PARTNER", simplePost);
         simplePost.registerSubscriber(partner);
         System.out.println(partner);
-        initiator.send(initiator, "TEST_MESSAGE");
+        initiator.send(initiator, INIT_MESSAGE);
         System.out.println("-=-=-=-=-=-=-=-=-=-=-");
         SyncPost syncPost = new SyncPost();
         Player syncInitiator = new Player("SYNC INITIATOR", syncPost);
@@ -21,8 +23,8 @@ public class TestApp {
         Thread syncInitiatorThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                syncInitiator.send(syncInitiator, "SYNC_TEST_MESSAGE");
-                while (true) {
+                syncInitiator.send(syncInitiator, INIT_MESSAGE);
+                while (!Thread.currentThread().isInterrupted()) {
                     syncInitiator.receiveAndReply(syncInitiator);
                 }
             }
@@ -30,7 +32,7 @@ public class TestApp {
         Thread syncPartnerThread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (true) {
+                while (!Thread.currentThread().isInterrupted()) {
                     syncPartner.receiveAndReply(syncPartner);
                 }
             }
