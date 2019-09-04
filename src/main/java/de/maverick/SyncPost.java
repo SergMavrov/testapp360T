@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class SyncPost implements Post{
 
-    private final static Logger LOGGER = Logger.getLogger(SyncPost.class);
+    private static final Logger LOGGER = Logger.getLogger(SyncPost.class);
 
     private String message;
     private Player owner;
@@ -17,7 +17,7 @@ public class SyncPost implements Post{
                 wait();
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
-                System.out.println(e.getMessage());
+                LOGGER.error("some error during sending", e);
             }
         }
         this.owner = sender;
@@ -33,7 +33,7 @@ public class SyncPost implements Post{
                 wait();
             } catch (InterruptedException e)  {
                 Thread.currentThread().interrupt();
-                System.out.println(e.getMessage());
+                LOGGER.error("some error during receiving", e);
             }
         }
         notifyAll();

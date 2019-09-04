@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public class TestApp {
 
-    private final static Logger LOGGER = Logger.getLogger(TestApp.class);
+    private static final Logger LOGGER = Logger.getLogger(TestApp.class);
 
     private static final String INIT_MESSAGE = "TEST_MESSAGE";
 
@@ -18,12 +18,8 @@ public class TestApp {
         simplePost.registerSubscriber(partner);
         LOGGER.debug(partner);
         initiator.send(INIT_MESSAGE);
+
         LOGGER.debug("-=-=-=-=-=-=-=-=-=-=-");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            LOGGER.error("delay is problematic", e);
-        }
         SyncPost syncPost = new SyncPost();
         Player syncInitiator = new Player("SYNC INITIATOR", syncPost);
         LOGGER.debug(syncInitiator);

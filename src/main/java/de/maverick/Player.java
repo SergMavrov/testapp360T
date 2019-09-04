@@ -1,8 +1,12 @@
 package de.maverick;
 
+import org.apache.log4j.Logger;
+
 import java.util.Objects;
 
 public class Player {
+
+    private static final Logger LOGGER = Logger.getLogger(Player.class);
 
     private static final byte COUNT_OF_SENT_MESSAGES = 10;
     private static final byte COUNT_OF_RECEIVED_MESSAGES = 10;
@@ -21,23 +25,23 @@ public class Player {
 
     public void send(String message) {
         sentMessagesCounter++;
-        System.out.println(String.format("%s is sending message N%d: %s", caption, sentMessagesCounter, message));
+        LOGGER.debug(String.format("%s is sending message N%d: %s", caption, sentMessagesCounter, message));
         post.send(this, message);
     }
 
     private String receive() {
         receivedMessagesCounter++;
         String message = post.receive(this);
-        System.out.println(String.format("%s has received the message: %s", caption, message));
+        LOGGER.debug(String.format("%s has received the message: %s", caption, message));
         return message;
     }
 
     public void receiveAndReply() {
         if (receivedMessagesCounter < COUNT_OF_RECEIVED_MESSAGES) {
-            System.out.println(String.format("The count of received messages = %s", receivedMessagesCounter));
+            LOGGER.debug(String.format("%s has the count of received messages = %s", caption, receivedMessagesCounter));
             String message = receive();
             if (sentMessagesCounter < COUNT_OF_SENT_MESSAGES) {
-                System.out.println(String.format("The count of sent messages = %d", sentMessagesCounter));
+                LOGGER.debug(String.format("%s has the count of sent messages = %d", caption, sentMessagesCounter));
                 send(String.format("%s-%d", message, sentMessagesCounter));
             }
         } else {
