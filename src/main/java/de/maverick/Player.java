@@ -4,6 +4,9 @@ import org.apache.log4j.Logger;
 
 import java.util.Objects;
 
+/**
+ * The class which can send and receive some text messages.
+ */
 public class Player {
 
     private static final Logger LOGGER = Logger.getLogger(Player.class);
@@ -23,6 +26,9 @@ public class Player {
         this.receivedMessagesCounter = 0;
     }
 
+    /**
+    *   Send the message.
+     */
     public void send(String message) {
         sentMessagesCounter++;
         LOGGER.debug(String.format("%s is sending message N%d: %s", caption, sentMessagesCounter, message));
@@ -36,6 +42,9 @@ public class Player {
         return message;
     }
 
+    /**
+     * Receive the message.
+     */
     public void receiveAndReply() {
         if (receivedMessagesCounter < COUNT_OF_RECEIVED_MESSAGES) {
             LOGGER.debug(String.format("%s has the count of received messages = %s", caption, receivedMessagesCounter));

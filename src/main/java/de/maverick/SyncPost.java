@@ -2,6 +2,9 @@ package de.maverick;
 
 import org.apache.log4j.Logger;
 
+/**
+ * The object -transporter of messages. It is synchronised to work in many threads.
+ */
 public class SyncPost implements Post{
 
     private static final Logger LOGGER = Logger.getLogger(SyncPost.class);

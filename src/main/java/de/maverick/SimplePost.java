@@ -3,6 +3,9 @@ package de.maverick;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * THe simple object-transporter. It is working in one thread.
+ */
 public class SimplePost implements Post{
 
     private List<Player> subscribers = new ArrayList<>();
