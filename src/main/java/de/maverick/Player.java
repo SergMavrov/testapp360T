@@ -11,12 +11,12 @@ public class Player {
 
     private static final Logger LOGGER = Logger.getLogger(Player.class);
 
-    private static final byte COUNT_OF_SENT_MESSAGES = 10;
-    private static final byte COUNT_OF_RECEIVED_MESSAGES = 10;
+    private static final int COUNT_OF_SENT_MESSAGES = 10000;
+    private static final int COUNT_OF_RECEIVED_MESSAGES = 10000;
 
     private String caption;
-    private byte sentMessagesCounter;
-    private byte receivedMessagesCounter;
+    private int sentMessagesCounter;
+    private int receivedMessagesCounter;
     private Post post;
 
     public Player(String caption, Post post) {
