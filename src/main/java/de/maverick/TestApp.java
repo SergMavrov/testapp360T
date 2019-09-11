@@ -12,12 +12,15 @@ public class TestApp {
         LOGGER.debug("-=-=-=-=-=-=-=-=-=-=-");
         SimplePost simplePost = new SimplePost();
         Player initiator = new Player("INITIATOR", simplePost);
-        simplePost.registerSubscriber(initiator);
         LOGGER.debug(initiator);
         Player partner = new Player("PARTNER", simplePost);
-        simplePost.registerSubscriber(partner);
         LOGGER.debug(partner);
+
         initiator.send(INIT_MESSAGE);
+        while (!simplePost.isEmpty()) {
+            partner.receiveAndReply();
+            initiator.receiveAndReply();
+        }
 
         LOGGER.debug("-=-=-=-=-=-=-=-=-=-=-");
         SyncPost syncPost = new SyncPost();

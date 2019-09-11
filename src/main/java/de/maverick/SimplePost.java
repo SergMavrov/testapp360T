@@ -1,31 +1,31 @@
 package de.maverick;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * THe simple object-transporter. It is working in one thread.
  */
 public class SimplePost implements Post{
 
-    private List<Player> subscribers = new ArrayList<>();
-    private String message;
-
-    public void registerSubscriber(Player player) {
-        subscribers.add(player);
-    }
+    private Map<Player, String> messages = new HashMap<>();
 
     public void send(Player sender, String message) {
-        this.message = message;
-        for (Player player : subscribers) {
-            if (!player.equals(sender)) {
-                player.receiveAndReply();
-            }
-        }
+        messages.put(sender, message);
     }
 
     public String receive(Player receiver) {
-        return message;
+        for (Player player : messages.keySet()) {
+            if (!player.equals(receiver)) {
+                String message = messages.get(player);
+                messages.remove(player);
+                return message;
+            }
+        }
+        throw new IllegalStateException("no messages from the another player");
     }
 
+    public boolean isEmpty() {
+        return messages.isEmpty();
+    }
 }
