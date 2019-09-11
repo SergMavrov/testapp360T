@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * THe simple object-transporter. It is working in one thread.
+ * The simple object-transporter. It is working in one thread.
  */
 public class SimplePost implements Post{
 
